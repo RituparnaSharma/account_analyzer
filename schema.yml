@@ -1,0 +1,9 @@
+table_schema : 
+    Txn_Date : DATE 
+    Txn_Year : INT
+    Txn_Month : VARCHAR
+    cust_name : VARCHAR
+    cust_bank_name : VARCHAR
+    Debit : FLOAT
+    Credit : FLOAT
+    Balance : FLOAT
