@@ -34,7 +34,7 @@ def create_table(get_name,schema,cur):
 # insert table values
 def insert_table(csv_path,table_name,cur):
     try:
-        query  = f''' COPY {table_name} from '{csv_path}' delimiter ','  csv; '''
+        query  = f'''copy {table_name} from '{csv_path}' delimiter ','  csv; '''
         cur.execute(query)
         print(f'Data inserted for table {table_name} succefully')
     except psycopg2.Error as e:

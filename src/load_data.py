@@ -12,6 +12,7 @@ def load_and_preprocess(config_path):
     # get destination path
     curr_dt = datetime.now().strftime('%y%m%d%H%M%S')
     dest_data_path = os.path.join(config['destination']['clean_data_source_csv'],f'sbi{curr_dt}.csv')
+    print(dest_data_path)
 
     # Variables
     commaDelList = []
@@ -46,6 +47,7 @@ def load_and_preprocess(config_path):
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser()
-    args.add_argument("--config",default = "../params.yml")
+    print(os.getcwd())
+    args.add_argument("--config",default = "params.yml")
     parsed_args = args.parse_args()
     data = load_and_preprocess(config_path=parsed_args.config)

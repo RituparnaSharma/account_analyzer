@@ -2,6 +2,7 @@ import re
 import os
 import argparse
 import pandas as pd
+from glob import glob
 from get_data import read_params
 from get_data import read_params
 from utils.common_util import get_latest_file
@@ -43,7 +44,7 @@ def get_table_info(config,dataframe):
             table_name.append(f'{month.lower()}{str(year)}')
             monthly_data =  yearly_data[yearly_data['Txn_Month']==month]
             path = os.path.join(config['get_utility']['feature_data_path'],f'{month.lower()}{str(year)}.csv')
-            table_path.append(path)
+            table_path.append(f'/opt/source_data/{month.lower()}{str(year)}.csv')
             monthly_data.to_csv(path,index=False,header =False)
     return table_name,table_path
 
@@ -57,9 +58,23 @@ def postgress_actions(config_path,schema_path):
     _,cur = connect()
 
     # create table
-    create_table(tab_names,schema['table_schema'],cur)
+    # create_table(tab_names,schema['table_schema'],cur)
+    import docker
+    client = docker.from_env()
+    pg_container = client.containers.list(filters={'name':'account_analyzer-postges-1'})
+    for path,name in zip(paths,tab_names):
+        command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
+        result = pg_container[0].exec_run(command)
+        print(result)
+        # contaners_list = client.containers.list(filters={'name':'account_analyzer-postges-1'})
+    # for containers in contaners_list:
+    #     result = containers.exec_run(command)
+    #     print(result)
 
+    # print(tab_names)
     # for path,name in zip(paths,tab_names):
+    #     path = os.path.normpath(path)
+    #     # print(glob(path))
     #     insert_table(path,name,cur)
 
 

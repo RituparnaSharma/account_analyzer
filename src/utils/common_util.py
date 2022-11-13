@@ -15,7 +15,6 @@ def get_latest_file(config,file_type):
             files = glob(clean_data_path)
         else:
             files = glob(data_path)
-
         for name in files:
             dates.update({name:datetime.datetime.strptime(time.ctime(os.path.getmtime(name)), "%a %b %d %H:%M:%S %Y")})
     except:

@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+.vscode
+*__pycache__
+/clean_data
+/feature_data
+/data
+/project_doc
+/env_pro
+/docker_resource
