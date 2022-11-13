@@ -1,9 +1,10 @@
 .ipynb_checkpoints
 .vscode
 __pycache__
-/clean_data
-/feature_data
-/data
+/Data_files
 /project_doc
+/Docker_resource
 /env_pro
+Dockerfile
+database.yml
 .env
