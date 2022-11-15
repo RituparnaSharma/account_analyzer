@@ -3,6 +3,13 @@ name: python-app-build
 on: 
   push:
     branch: main
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
+        required: false
+        default: false
 
 jobs:
   build:
@@ -12,10 +19,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup upterm session
-      uses: lhotari/action-upterm@v1
-      with:
-        ## limits ssh access and adds the ssh public key for the user which triggered the workflow
-        limit-access-to-actor: true
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+      # Enable tmate debugging of manually-triggered workflows if the input option was provided
+    - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
     - name: setup python
       uses: actions/setup-python@v4
       with:
