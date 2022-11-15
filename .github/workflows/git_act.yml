@@ -14,8 +14,8 @@ jobs:
     - name: Setup upterm session
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
+      with:
+        limit-access-to-actor: true
     - name: setup python
       uses: actions/setup-python@v4
       with:
