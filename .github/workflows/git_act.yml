@@ -11,9 +11,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup upterm session
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
     - name: setup python
       uses: actions/setup-python@v4
       with:
@@ -30,4 +27,6 @@ jobs:
       uses: isbang/compose-action@v1.4.1
       with:
         compose-file: "database.yml"
+    - name: Setup upstream session
+      uses: lhotari/action-upterm@v1
 
