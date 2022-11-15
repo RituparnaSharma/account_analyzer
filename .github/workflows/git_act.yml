@@ -1,4 +1,4 @@
-name: name of the file
+name: python-app-build
 
 on: 
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on:  ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: setup python
       uses: actions/setup-python@v4
       with:
