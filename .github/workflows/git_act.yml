@@ -11,36 +11,38 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: setup python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
+    - name : ls
+      run: ls
+#     - name: setup python
+#       uses: actions/setup-python@v4
+#       with:
+#         python-version: '3.8'
 
-    - name : install requirements
-      run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-    - name : setup python path
-      run: export PYTHONPATH=$PYTHONPATH:/src
+#     - name : install requirements
+#       run: |
+#             python -m pip install --upgrade pip
+#             pip install -r requirements.txt
+#     - name : setup python path
+#       run: export PYTHONPATH=$PYTHONPATH:/src
 
-    - name: run docker compose file
-      uses: isbang/compose-action@v1.4.1
-      with:
-        compose-file: "database.yml"
+#     - name: run docker compose file
+#       uses: isbang/compose-action@v1.4.1
+#       with:
+#         compose-file: "database.yml"
 
-    - name: get container name
-      run: docker ps
+#     - name: get container name
+#       run: docker ps
     
-    - name: get ip address
-      run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+#     - name: get ip address
+#       run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
       
-    - name: Public IP
-      id: ip
-      uses: haythem/public-ip@v1.3
+#     - name: Public IP
+#       id: ip
+#       uses: haythem/public-ip@v1.3
         
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-        timeout-minutes: 15
+#     - name: Setup tmate session
+#       uses: mxschmitt/action-tmate@v3
+#       with:
+#         timeout-minutes: 15
 
 
