@@ -22,8 +22,8 @@ services:
       - POSTGRES_USER=${pg_user}
       - POSTGRES_DB=${pg_database}
     volumes:
-      - ./docker_resource/pg_data:/var/lib/postgresql/data
-      - ./Data_files/feature_data/target_data:/opt/source_data
+      - /docker_resource/pg_data:/var/lib/postgresql/data
+      - /Data_files/feature_data/target_data:/opt/source_data
   pgadmin:
     image: "dpage/pgadmin4"
     ports:
