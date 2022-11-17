@@ -30,10 +30,6 @@ jobs:
             docker volume prune -f
             docker-compose -f "database.yml" up -d
             
-    - name: show  data     
-      run: |
-            postgresql://postgres:ritu@@13579@localhost:5432/monthlyaccsummary -c 'select * from aug2022 limit 2'
-      
     - name: get container name
       run: docker ps
     
