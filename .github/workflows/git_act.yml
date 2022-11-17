@@ -5,15 +5,12 @@ on:
     branches: main
     
 jobs:
-  any:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
   container-job:
       # Containers must run in Linux based operating systems
       runs-on: ubuntu-latest
-      needs: [any]
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
       # Service containers to run with `container-job`
       services:
 
