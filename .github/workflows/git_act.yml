@@ -19,7 +19,7 @@ jobs:
         architecture: x64
     - name : setup python path
       run: |
-          export PYTHONPATH="$PWD/src"
+          export PYTHONPATH="/home/beatfit/actions-runner/_work/account_analyzer/src"
           sudo PATH=$PATH:/usr/pgsql-9.3/bin/ pip install psycopg2
     
     - name : install requirements
