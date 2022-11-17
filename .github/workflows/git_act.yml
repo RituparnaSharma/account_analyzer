@@ -45,6 +45,8 @@ jobs:
             pwd
             ls /Data_files/clean_data
     - name: run load-data
-      run: python src/load_data.py      
+      run: |
+            python src/get_data.py
+            python src/load_data.py      
 
 
