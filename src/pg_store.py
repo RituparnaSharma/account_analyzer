@@ -61,7 +61,7 @@ def postgress_actions(config_path,schema_path):
     # create_table(tab_names,schema['table_schema'],cur)
     import docker
     client = docker.from_env()
-    pg_container = client.containers.list(filters={'name':'account_analyzer-postges-1'})
+    pg_container = client.containers.list()
     print('containers -->',pg_container)
     for path,name in zip(paths,tab_names):
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
