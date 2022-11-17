@@ -62,6 +62,7 @@ def postgress_actions(config_path,schema_path):
     import docker
     client = docker.from_env()
     pg_container = client.containers.list(filters={'name':'account_analyzer-postges-1'})
+    print('containers -->',pg_container)
     for path,name in zip(paths,tab_names):
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
         result = pg_container[0].exec_run(command)
