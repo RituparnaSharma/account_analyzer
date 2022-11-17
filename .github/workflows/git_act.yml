@@ -33,14 +33,16 @@ jobs:
             
     - name: get container name
       run: docker ps
-    - name: curl
-      run: curl -X GET "http://20.122.33.250:80"
-    
-    - name: get ip address
-      run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
       
     - name: Public IP
       id: ip
       uses: haythem/public-ip@v1.3
+      
+    - name: curl
+      run: curl -X GET "http://${{steps.ip.outputs.ipv4}}:80"
+    
+    - name: get ip address
+      run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+      
 
 
