@@ -14,7 +14,7 @@ def load_and_preprocess(config_path):
     dest_data_path = os.path.join(config['destination']['clean_data_source_csv'],f'sbi{curr_dt}.csv')
     print(dest_data_path)
     
-    if not os.path.exists(directory):
+    if not os.path.exists("Data_files/clean_data"):
         os.makedirs("Data_files/clean_data")
     # Variables
     commaDelList = []
