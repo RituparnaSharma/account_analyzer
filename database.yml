@@ -25,7 +25,7 @@ services:
       - /docker_resource/pg_data:/var/lib/postgresql/data
       - /Data_files/feature_data/target_data:/opt/source_data
     healthcheck:
-      test: pg_isready -U myuser -d db_prod
+      test: pg_isready -U ${pg_user} -d ${pg_database}
       interval: 10s
       timeout: 3s
       retries: 3
