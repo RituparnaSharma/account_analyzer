@@ -24,6 +24,8 @@ services:
     volumes:
       - /docker_resource/pg_data:/var/lib/postgresql/data
       - /Data_files/feature_data/target_data:/opt/source_data
+    options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    
   pgadmin:
     image: "dpage/pgadmin4"
     ports:
