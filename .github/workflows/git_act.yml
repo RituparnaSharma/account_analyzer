@@ -19,7 +19,7 @@ jobs:
         architecture: x64
     - name : setup python path
       run: |
-          export PYTHONPATH=$PYTHONPATH:/src
+          export PYTHONPATH="$PWD/src"
           sudo PATH=$PATH:/usr/pgsql-9.3/bin/ pip install psycopg2
     
     - name : install requirements
