@@ -8,6 +8,8 @@ def get_latest_file(config,file_type):
     
     data_path = config['get_utility']['data_path']
     clean_data_path = config['get_utility']['clean_data_path']
+    
+    print(data_path,clean_data_path)
 
     dates = {}
     try:
@@ -15,6 +17,7 @@ def get_latest_file(config,file_type):
             files = glob(clean_data_path)
         else:
             files = glob(data_path)
+        print(files)
         for name in files:
             dates.update({name:datetime.datetime.strptime(time.ctime(os.path.getmtime(name)), "%a %b %d %H:%M:%S %Y")})
     except:
