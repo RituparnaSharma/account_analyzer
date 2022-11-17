@@ -48,6 +48,6 @@ def load_and_preprocess(config_path):
 if __name__ == "__main__":
     args = argparse.ArgumentParser()
     print(os.getcwd())
-    args.add_argument("--config",default = "/params.yml")
+    args.add_argument("--config",default = "params.yml")
     parsed_args = args.parse_args()
     data = load_and_preprocess(config_path=parsed_args.config)
