@@ -35,9 +35,10 @@ jobs:
           
           volumes: 
             - /docker_resource/pg_data:/var/lib/postgresql/data
-#             - Data_files/feature_data/target_data:/opt/source_data
+            - /Data_files/feature_data/target_data:/opt/source_data
       steps:
-      
+      - name: listof directory
+        run: ls
       - name: setup python
         uses: actions/setup-python@v4
         with:
