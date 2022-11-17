@@ -44,11 +44,12 @@ jobs:
     - name: run load-data
       run: |
             python src/get_data.py
-            python src/load_data.py      
+            python src/load_data.py    
+            python src/pg_store.py
             
     - run: |
         pwd
-        ls /Data_files/clean_data
-        ls /Data_files/source_data
+        ls ./Data_files/clean_data
+        ls ./Data_files/source_data
 
 
