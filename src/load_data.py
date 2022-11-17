@@ -15,7 +15,7 @@ def load_and_preprocess(config_path):
     print(dest_data_path)
     
     if not os.path.exists(directory):
-        os.makedirs(Data_files/clean_data)
+        os.makedirs("Data_files/clean_data")
     # Variables
     commaDelList = []
     rowList = []
