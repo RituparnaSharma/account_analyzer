@@ -83,7 +83,7 @@ def postgress_actions(config_path,schema_path):
 if __name__ == "__main__":
 
     args = argparse.ArgumentParser()
-    args.add_argument("--config",default = "../params.yml")
-    args.add_argument("--schema",default = "../schema.yml" )
+    args.add_argument("--config",default = "params.yml")
+    args.add_argument("--schema",default = "schema.yml" )
     parsed_args = args.parse_args()
     data = postgress_actions(config_path=parsed_args.config,schema_path = parsed_args.schema)
