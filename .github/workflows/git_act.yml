@@ -28,9 +28,9 @@ jobs:
           ports:
           - 5432:5432
           
-#           volumes: 
+          volumes: 
 # #             - ./docker_resource/pg_data:/var/lib/postgresql/data
-#             - ./Data_files/feature_data/target_data:/opt/source_data
+            - ./Data_files/feature_data/target_data:opt/source_data
       steps:
       - name: checkout
         uses: actions/checkout@v3
