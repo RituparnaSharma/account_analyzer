@@ -28,7 +28,9 @@ jobs:
             pip install -r requirements.txt
 
     - name: Start containers
-      run: docker-compose -f "database.yml" up -d
+      run: |
+            docker volume prune -y
+            docker-compose -f "database.yml" up -d
       
     - name: get container name
       run: docker ps
