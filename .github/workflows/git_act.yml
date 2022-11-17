@@ -5,51 +5,71 @@ on:
     branches: main
 
 jobs:
-  build:
+  container-job:
+      # Containers must run in Linux based operating systems
+      runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+      # Service containers to run with `container-job`
+      services:
+        # Label used to access the service container
+        postgres:
+          # Docker Hub image
+          image: postgres:13.8
+          # Provide the password for postgres
+          env:
+            POSTGRES_PASSWORD: ritu@@13579
+            POSTGRES_DB: monthlyaccsummary
+          # Set health checks to wait until postgres has started
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+          ports:
+          - 5432:5432
+          volumes:
+            - ./docker_resource/pg_data:/var/lib/postgresql/data
+            - ./Data_files/feature_data/target_data:/opt/source_data
+      steps:
+      - uses: actions/checkout@v3
 
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: setup python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-        
-    - name : setup python path
-      run: export PYTHONPATH="${PYTHONPATH}:/src"
-    
-    - name : install requirements
-      run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
 
-    - name: Start containers
-      run: |
-            docker volume prune -f
-            docker-compose -f "database.yml" up -d
-          
-            
-    - name: get container name
-      run: docker ps
-      
-    - name: Public IP
-      id: ip
-      uses: haythem/public-ip@v1.3
+      - name : setup python path
+        run: export PYTHONPATH="${PYTHONPATH}:/src"
 
-    - name: get ip address
-      run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
-    
-    - name: run load-data
-      run: |
-            python src/get_data.py
-            python src/load_data.py    
-            python src/pg_store.py
-            
-    - run: |
-        pwd
-        ls ./Data_files/clean_data
-        ls ./Data_files/source_data
+      - name : install requirements
+        run: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+
+      - name: Start containers
+        run: |
+              docker volume prune -f
+
+
+      - name: get container name
+        run: docker ps
+
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.3
+
+      - name: get ip address
+        run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+
+      - name: run load-data
+        run: |
+              python src/get_data.py
+              python src/load_data.py    
+              python src/pg_store.py
+
+      - run: |
+          pwd
+          ls ./Data_files/clean_data
+          ls ./Data_files/source_data
 
 
