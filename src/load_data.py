@@ -13,7 +13,9 @@ def load_and_preprocess(config_path):
     curr_dt = datetime.now().strftime('%y%m%d%H%M%S')
     dest_data_path = os.path.join(config['destination']['clean_data_source_csv'],f'sbi{curr_dt}.csv')
     print(dest_data_path)
-
+    
+    if not os.path.exists(directory):
+        os.makedirs(Data_files/clean_data)
     # Variables
     commaDelList = []
     rowList = []
