@@ -29,9 +29,14 @@ jobs:
       run: |
             docker volume prune -f
             docker-compose -f "database.yml" up -d
+          
             
     - name: get container name
       run: docker ps
+    - name: curl
+      uses: wei/curl@master
+      with:
+        args: https://localhost:80
     
     - name: get ip address
       run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
