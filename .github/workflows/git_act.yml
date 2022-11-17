@@ -27,11 +27,9 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
 
-    - name: run docker compose file
-      uses: isbang/compose-action@v1.4.1
-      with:
-        compose-file: "database.yml"
-
+    - name: Start containers
+      run: docker-compose -f "database.yml" up -d
+      
     - name: get container name
       run: docker ps
     
