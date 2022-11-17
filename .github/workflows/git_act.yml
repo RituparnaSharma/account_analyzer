@@ -32,8 +32,7 @@ jobs:
             
     - name: show  data     
       run: |
-            apt-get install --yes --no-install-recommends postgresql-client
-            psql -h localhost -U postgres -D monthlyaccsummary -p 5432 -c 'select * from aug2022 limi 2'
+            postgresql://postgres:ritu@@13579@localhost:5432/monthlyaccsummary -c 'select * from aug2022 limit 2'
       
     - name: get container name
       run: docker ps
