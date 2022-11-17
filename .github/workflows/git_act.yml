@@ -5,12 +5,6 @@ on:
     branches: main
     
 jobs:
-  
-  copy-job:
-      runs-on: ubuntu-latest
-        steps:
-          - name: checkout
-            uses: actions/checkout@v3
   container-job:
       # Containers must run in Linux based operating systems
       runs-on: ubuntu-latest
@@ -34,9 +28,10 @@ jobs:
           ports:
           - 5432:5432
           volumes:
-            - ./docker_resource/pg_data:/var/lib/postgresql/data
-            - ./Data_files/feature_data/target_data:/opt/source_data
+            - docker_resource/pg_data:/var/lib/postgresql/data
+            - Data_files/feature_data/target_data:/opt/source_data
       steps:
+      
       - uses: actions/checkout@v3
       - name: setup python
         uses: actions/setup-python@v4
