@@ -39,7 +39,7 @@ jobs:
       uses: haythem/public-ip@v1.3
       
     - name: curl
-      run: curl -X GET "http://${{steps.ip.outputs.ipv4}}:80"
+      run: curl "http://${{steps.ip.outputs.ipv4}}:80"
     
     - name: get ip address
       run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
