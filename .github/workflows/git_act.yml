@@ -8,6 +8,8 @@ jobs:
   container-job:
       # Containers must run in Linux based operating systems
       runs-on: ubuntu-latest
+      steps:
+        uses: actions/checkout@v3
       # Service containers to run with `container-job`
       services:
 
@@ -31,7 +33,7 @@ jobs:
             - ./docker_resource/pg_data:/var/lib/postgresql/data
             - ./Data_files/feature_data/target_data:/opt/source_data
       steps:
-      - uses: actions/checkout@v3
+
 
       - name: setup python
         uses: actions/setup-python@v4
