@@ -41,7 +41,7 @@ jobs:
     - name: get ip address
       run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
     
-    - run: ls /Data_files/clean_data
+    - run: ls ./Data_files
     - name: run load-data
       run: python src/load_data.py      
 
