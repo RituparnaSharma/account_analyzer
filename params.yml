@@ -1,10 +1,10 @@
 # preprocess path
 destination:
-  clean_data_source_csv : Data_files/clean_data
+  clean_data_source_csv : ./Data_files/clean_data
 
   # excel and data files
 
 get_utility : 
-  data_path : Data_files/source_data/*
-  clean_data_path : Data_files/clean_data/*.csv
-  feature_data_path : Data_files/feature_data/target_data
+  data_path : ./Data_files/source_data/*
+  clean_data_path : ./Data_files/clean_data/*.csv
+  feature_data_path : ./Data_files/feature_data/target_data
