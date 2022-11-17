@@ -13,14 +13,6 @@ services:
 #       depends on:
 #         - postgres
 #         - pgadmin
-  healthcheck:
-    test: ["CMD-SHELL", "pg_isready"]
-    interval: 10s
-    timeout: 5s
-    retries: 5
-    depends_on:
-      postges:
-        condition: service_healthy
   postges:
     image: "postgres:13.8"
     ports:
@@ -32,6 +24,11 @@ services:
     volumes:
       - /docker_resource/pg_data:/var/lib/postgresql/data
       - /Data_files/feature_data/target_data:/opt/source_data
+    healthcheck:
+      test: pg_isready -U myuser -d db_prod
+      interval: 10s
+      timeout: 3s
+      retries: 3
     
   pgadmin:
     image: "dpage/pgadmin4"
