@@ -63,7 +63,7 @@ def postgress_actions(config_path,schema_path):
     import docker
     import subprocess
     import tarfile
-    def copy_to(src, dst ,tab_name ,container):
+    def copy_to(src, dst ,container):
             
         tar = tarfile.open(src + '.tar', mode='w')
         try:
@@ -81,7 +81,7 @@ def postgress_actions(config_path,schema_path):
     
     for path,name in zip(paths,tab_names):
         src = f"Data_files/feature_data/target_data/{name}.csv"
-        dst = f"/opt/source_data"
+        dst = f"/opt
         copy_to(src, dst ,pg_container[0])
 #         p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"],shell=True)
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from /opt/Data_files/feature_data/target_data/{name}.csv delimiter ',' csv"'''
