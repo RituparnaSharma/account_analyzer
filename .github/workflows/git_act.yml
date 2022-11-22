@@ -13,7 +13,7 @@ jobs:
         container:
         # Label used to access the service container
           # Docker Hub image
-          image: postgres
+          image: postgres:13.8
           # Provide the password for postgres
           env:
             POSTGRES_PASSWORD: ritu@@13579
@@ -27,9 +27,9 @@ jobs:
           ports:
           - 5432:5432
           
-          volumes: 
+#           volumes: 
 # #             - ./docker_resource/pg_data:/var/lib/postgresql/data
-            - ./Data_files/feature_data/target_data:opt/source_data
+#             - ./Data_files/feature_data/target_data:opt/source_data
       steps:
       - name: checkout
         uses: actions/checkout@v3
