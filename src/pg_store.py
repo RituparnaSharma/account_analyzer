@@ -62,19 +62,34 @@ def postgress_actions(config_path,schema_path):
     create_table(tab_names,schema['table_schema'],cur)
     import docker
     import subprocess
+    import tarfile
+    def copy_to(src, dst , container):
+
+        tar = tarfile.open(src + '.tar', mode='w')
+        try:
+            tar.add(src)
+        finally:
+            tar.close()
+
+        data = open(src + '.tar', 'rb').read()
+        container.put_archive(os.path.dirname(dst), data)
+        
     client = docker.from_env()
     # pg_container = client.containers.list(filters={'name':'account_analyzer-postges-1'})
     pg_container = client.containers.list()
     print('containers -->',pg_container[0].id)
     
     for path,name in zip(paths,tab_names):
-        p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"],shell=True)
+        src = f"Data_files/feature_data/target_data/{name}.csv"
+        dst = f"/opt/source_data"
+        copy_to(src, dst ,pg_container[0])
+#         p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"],shell=True)
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
         print(pg_container[0].exec_run("ls"))
         print(pg_container[0].exec_run("ls /opt"))  
         print(pg_container[0].exec_run("ls /opt/source_data"))  
         result = pg_container[0].exec_run(command)
-        print(p)
+#         print(p)
         print(result)
 
     # print(tab_names)
