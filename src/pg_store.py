@@ -44,7 +44,7 @@ def get_table_info(config,dataframe):
             table_name.append(f'{month.lower()}{str(year)}')
             monthly_data =  yearly_data[yearly_data['Txn_Month']==month]
             path = os.path.join(config['get_utility']['feature_data_path'],f'{month.lower()}{str(year)}.csv')
-            table_path.append(f'/opt/source_data/{month.lower()}{str(year)}.csv')
+            table_path.append(f'opt/source_data/{month.lower()}{str(year)}.csv')
             monthly_data.to_csv(path,index=False,header =False)
     return table_name,table_path
 
