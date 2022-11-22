@@ -13,7 +13,7 @@ jobs:
         container:
         # Label used to access the service container
           # Docker Hub image
-          image: postgres:13.8
+          image: postgres
           # Provide the password for postgres
           env:
             POSTGRES_PASSWORD: ritu@@13579
