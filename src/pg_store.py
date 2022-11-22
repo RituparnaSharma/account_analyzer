@@ -7,7 +7,6 @@ from get_data import read_params
 from get_data import read_params
 from utils.common_util import get_latest_file
 from postgress_connections.create_connection import connect,create_table,insert_table
-print('1------->>>>>>>>')
 
 def pg_preprocess(config):
 
@@ -57,30 +56,20 @@ def postgress_actions(config_path,schema_path):
     
     # read feature data
     pg_acc_data = pg_preprocess(config)
-    print('2------->>>>>>>>')
     tab_names,paths = get_table_info(config,pg_acc_data)
-    print('3------->>>>>>>>')
     _,cur = connect()
-    print('4------->>>>>>>>')
 
     create_table(tab_names,schema['table_schema'],cur)
     import docker
     import subprocess
     client = docker.from_env()
-    print('5------->>>>>>>>')
     # pg_container = client.containers.list(filters={'name':'account_analyzer-postges-1'})
     pg_container = client.containers.list()
     print('containers -->',pg_container[0].id)
     
     for path,name in zip(paths,tab_names):
-        print(name)
-        print("x1")
-        print(glob("Data_files/feature_data/target_data/*"))
-        print("x2")
-        print(glob("/Data_files/feature_data/target_data/*"))
         p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"],shell=True)
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
-        subprocess.call(["docker" ,"exec" ,"t" ,f"{pg_container[0].id}" ,"/bin/bash"])
         print(pg_container[0].exec_run("ls"))
         print(pg_container[0].exec_run("ls /opt"))  
         print(pg_container[0].exec_run("ls /opt/source_data"))  
