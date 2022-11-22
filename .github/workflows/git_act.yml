@@ -3,75 +3,85 @@ name: python-app-build
 on: 
   push:
     branches: main
-    
+
 jobs:
-  container-job:
-      # Containers must run in Linux based operating systems
-      runs-on: ubuntu-latest
-      # Service containers to run with `container-job`
-      services:
-        container:
-        # Label used to access the service container
-          # Docker Hub image
-          image: postgres:13.8
-          # Provide the password for postgres
-          env:
-            POSTGRES_PASSWORD: ritu@@13579
-            POSTGRES_DB: monthlyaccsummary
-          # Set health checks to wait until postgres has started
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
-          ports:
-          - 5432:5432
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: Debug with tmate on failure
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+    
+# jobs:
+#   container-job:
+#       # Containers must run in Linux based operating systems
+#       runs-on: ubuntu-latest
+#       # Service containers to run with `container-job`
+#       services:
+#         container:
+#         # Label used to access the service container
+#           # Docker Hub image
+#           image: postgres:13.8
+#           # Provide the password for postgres
+#           env:
+#             POSTGRES_PASSWORD: ritu@@13579
+#             POSTGRES_DB: monthlyaccsummary
+#           # Set health checks to wait until postgres has started
+#           options: >-
+#             --health-cmd pg_isready
+#             --health-interval 10s
+#             --health-timeout 5s
+#             --health-retries 5
+#           ports:
+#           - 5432:5432
           
-#           volumes: 
-# #             - ./docker_resource/pg_data:/var/lib/postgresql/data
-#             - ./Data_files/feature_data/target_data:opt/source_data
-      steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: listof directory
-        run: ls
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
+# #           volumes: 
+# # #             - ./docker_resource/pg_data:/var/lib/postgresql/data
+# #             - ./Data_files/feature_data/target_data:opt/source_data
+#       steps:
+#       - name: checkout
+#         uses: actions/checkout@v3
+#       - name: listof directory
+#         run: ls
+#       - name: setup python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.8'
 
-      - name : setup python path
-        run: export PYTHONPATH="${PYTHONPATH}:/src"
+#       - name : setup python path
+#         run: export PYTHONPATH="${PYTHONPATH}:/src"
 
-      - name : install requirements
-        run: |
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
+#       - name : install requirements
+#         run: |
+#               python -m pip install --upgrade pip
+#               pip install -r requirements.txt
 
-      - name: Start containers
-        run: |
-              docker volume prune -f
+#       - name: Start containers
+#         run: |
+#               docker volume prune -f
 
 
-      - name: get container name
-        run: docker ps
+#       - name: get container name
+#         run: docker ps
 
-      - name: Public IP
-        id: ip
-        uses: haythem/public-ip@v1.3
+#       - name: Public IP
+#         id: ip
+#         uses: haythem/public-ip@v1.3
 
-      - name: get ip address
-        run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+#       - name: get ip address
+#         run: docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
 
-      - name: run load-data
-        run: |
-              python src/get_data.py
-              python src/load_data.py    
-              python src/pg_store.py
+#       - name: run load-data
+#         run: |
+#               python src/get_data.py
+#               python src/load_data.py    
+#               python src/pg_store.py
 
-      - run: |
-          pwd
-          ls ./Data_files/clean_data
-          ls ./Data_files/source_data
+#       - run: |
+#           pwd
+#           ls ./Data_files/clean_data
+#           ls ./Data_files/source_data
 
 
