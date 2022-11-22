@@ -71,12 +71,12 @@ def postgress_actions(config_path,schema_path):
     print('containers -->',pg_container[0].id)
     
     for path,name in zip(paths,tab_names):
-        p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:opt/source_data"],shell=True)
+        p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:./opt/source_data"],shell=True)
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
         subprocess.call(["docker" ,"exec" ,"t" ,f"{pg_container[0].id}" ,"/bin/bash"])
-#         print(pg_container[0].exec_run("ls"))
-#         print(pg_container[0].exec_run("ls opt"))  
-#         print(pg_container[0].exec_run("ls opt/source_data"))  
+        print(pg_container[0].exec_run("ls"))
+        print(pg_container[0].exec_run("ls ./opt"))  
+        print(pg_container[0].exec_run("ls ./opt/source_data"))  
         result = pg_container[0].exec_run(command)
         print(p)
         print(result)
