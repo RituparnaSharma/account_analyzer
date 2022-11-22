@@ -7,6 +7,7 @@ from get_data import read_params
 from get_data import read_params
 from utils.common_util import get_latest_file
 from postgress_connections.create_connection import connect,create_table,insert_table
+print('1------->>>>>>>>')
 
 def pg_preprocess(config):
 
@@ -54,7 +55,9 @@ def postgress_actions(config_path,schema_path):
     
     # read feature data
     pg_acc_data = pg_preprocess(config)
+    print('2------->>>>>>>>')
     tab_names,paths = get_table_info(config,pg_acc_data)
+    print('3------->>>>>>>>')
     _,cur = connect()
 
     create_table(tab_names,schema['table_schema'],cur)
