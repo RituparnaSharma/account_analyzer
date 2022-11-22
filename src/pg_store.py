@@ -44,7 +44,7 @@ def get_table_info(config,dataframe):
             table_name.append(f'{month.lower()}{str(year)}')
             monthly_data =  yearly_data[yearly_data['Txn_Month']==month]
             path = os.path.join(config['get_utility']['feature_data_path'],f'{month.lower()}{str(year)}.csv')
-            table_path.append(f'opt/source_data/{month.lower()}{str(year)}.csv')
+            table_path.append(f'/opt/source_data/{month.lower()}{str(year)}.csv')
             monthly_data.to_csv(path,index=False,header =False)
     return table_name,table_path
 
@@ -57,22 +57,18 @@ def postgress_actions(config_path,schema_path):
     tab_names,paths = get_table_info(config,pg_acc_data)
     _,cur = connect()
 
-    # create table
-    # create_table(tab_names,schema['table_schema'],cur)
+    create_table(tab_names,schema['table_schema'],cur)
     import docker
+    import subprocess
     client = docker.from_env()
+    # pg_container = client.containers.list(filters={'name':'account_analyzer-postges-1'})
     pg_container = client.containers.list()
-    print('containers -->',pg_container)
+    print('containers -->',pg_container[0].id)
     for path,name in zip(paths,tab_names):
+        subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"])
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
         result = pg_container[0].exec_run(command)
-        q = pg_container[0].exec_run(f'''psql -U postgres -d monthlyaccsummary -c "select * from aug2022 limit 2"''')
         print(result)
-        print(q)
-        # contaners_list = client.containers.list(filters={'name':'account_analyzer-postges-1'})
-    # for containers in contaners_list:
-    #     result = containers.exec_run(command)
-    #     print(result)
 
     # print(tab_names)
     # for path,name in zip(paths,tab_names):
