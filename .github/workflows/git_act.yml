@@ -8,11 +8,11 @@ jobs:
   container-job:
       # Containers must run in Linux based operating systems
       runs-on: ubuntu-latest
+      container:
       # Service containers to run with `container-job`
       services:
         postgres:
         # Label used to access the service container
-        container:
           # Docker Hub image
           image: postgres:13.8
           # Provide the password for postgres
