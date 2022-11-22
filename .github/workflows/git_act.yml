@@ -1,19 +1,19 @@
-name: python-app-build
+# name: python-app-build
 
-on: 
-  push:
-    branches: main
+# on: 
+#   push:
+#     branches: main
 
+name: CI
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: Debug with tmate on failure
+    - uses: actions/checkout@v2
+    - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
-      with:
-        sudo: false
+      timeout-minutes: 15
 # jobs:
 #   container-job:
 #       # Containers must run in Linux based operating systems
