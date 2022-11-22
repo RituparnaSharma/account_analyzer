@@ -39,6 +39,8 @@ def pg_preprocess(config):
 def get_table_info(config,dataframe):
     table_name = []
     table_path = []
+    if not os.path.exists(config['get_utility']['feature_data_path']):
+        os.makedirs(config['get_utility']['feature_data_path'])
     for year in dataframe['Txn_Year'].unique():
         yearly_data = dataframe[dataframe['Txn_Year'] == year]
         for month in yearly_data['Txn_Month'].unique():
