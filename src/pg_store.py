@@ -90,7 +90,7 @@ def postgress_actions(config_path,schema_path):
         result = pg_container[0].exec_run(command)
 #         print(p)
         print(result)
-        print(pg_container[0].exec_run(f'''psql -U postgres -d monthlyaccsummary -c "select * from aug2022"'''))
+        print(pg_container[0].exec_run(f'''psql -U postgres -d monthlyaccsummary -c "select * from apr2021"'''))
 
     # print(tab_names)
     # for path,name in zip(paths,tab_names):
