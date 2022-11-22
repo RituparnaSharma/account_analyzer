@@ -63,7 +63,7 @@ def postgress_actions(config_path,schema_path):
     import docker
     import subprocess
     import tarfile
-        def copy_to(src, dst ,tab_name ,container):
+    def copy_to(src, dst ,tab_name ,container):
             
         tar = tarfile.open(src + '.tar', mode='w')
         try:
