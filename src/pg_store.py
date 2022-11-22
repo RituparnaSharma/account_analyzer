@@ -45,7 +45,7 @@ def get_table_info(config,dataframe):
             table_name.append(f'{month.lower()}{str(year)}')
             monthly_data =  yearly_data[yearly_data['Txn_Month']==month]
             path = os.path.join(config['get_utility']['feature_data_path'],f'{month.lower()}{str(year)}.csv')
-            table_path.append(f'opt/source_data/{month.lower()}{str(year)}.csv')
+            table_path.append(f'/opt/source_data/{month.lower()}{str(year)}.csv')
             monthly_data.to_csv(path,index=False,header =False)
     return table_name,table_path
 
@@ -76,7 +76,7 @@ def postgress_actions(config_path,schema_path):
         print(glob("Data_files/feature_data/target_data/*"))
         print("x2")
         print(glob("/Data_files/feature_data/target_data/*"))
-        p = subprocess.call(["docker", "cp", f"/Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"])
+        p = subprocess.call(["docker", "cp", f"Data_files/feature_data/target_data/{name}.csv", f"{pg_container[0].id}:/opt/source_data"])
         command = f'''psql -U postgres -d monthlyaccsummary -c "\copy {name} from {path} delimiter ',' csv"'''
         subprocess.call(["docker" ,"exec" ,"t" ,f"{pg_container[0].id}" ,"/bin/bash"])
         print(pg_container[0].exec_run("ls"))
